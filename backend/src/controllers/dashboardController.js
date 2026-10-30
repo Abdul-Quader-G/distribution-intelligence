@@ -41,7 +41,7 @@ const getDashboardOverview = async (req, res, next) => {
       const dateKey = d.toISOString().split('T')[0];
       trendMap[dateKey] = {
         date: dateKey,
-        label: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        label: d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' }),
         unitsSold: 0,
         revenue: 0,
         unitsSupplied: 0
@@ -80,7 +80,7 @@ const getDashboardOverview = async (req, res, next) => {
         locationId: lb.locationId,
         name: loc?.name || 'Store Location',
         code: loc?.code || 'LOC',
-        city: loc?.city || 'Metropolis',
+        city: loc?.city || 'Hyderabad',
         unitsSold: lb.totalUnitsSold,
         unitsSupplied: lb.totalSuppliedUnits,
         physicalInventory: lb.physicalInventory,

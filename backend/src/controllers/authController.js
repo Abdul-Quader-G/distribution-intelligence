@@ -81,10 +81,10 @@ const register = async (req, res, next) => {
       name: name || 'Business Owner',
       email: email.toLowerCase(),
       password,
-      companyName: companyName || 'Apex Distribution Group',
-      productName: productName || 'Apex Organic Greek Yogurt (500g)',
-      defaultUnitCost: defaultUnitCost || 4.5,
-      defaultSellingPrice: defaultSellingPrice || 7.99
+      companyName: companyName || 'Apex Dairy Distribution',
+      productName: productName || 'Apex Fresh Paneer 200g',
+      defaultUnitCost: defaultUnitCost || 75.0,
+      defaultSellingPrice: defaultSellingPrice || 105.0
     });
 
     const token = generateToken(user._id);

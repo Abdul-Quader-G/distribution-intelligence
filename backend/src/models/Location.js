@@ -27,11 +27,11 @@ const locationSchema = new mongoose.Schema(
     city: {
       type: String,
       required: [true, 'City is required'],
-      default: 'Metropolis'
+      default: 'Hyderabad'
     },
     state: {
       type: String,
-      default: 'NY'
+      default: 'Telangana'
     },
     contactPerson: {
       type: String,
@@ -39,7 +39,7 @@ const locationSchema = new mongoose.Schema(
     },
     contactPhone: {
       type: String,
-      default: '+1 (555) 019-2834'
+      default: '+91 98490 12345'
     },
     capacityUnits: {
       type: Number,

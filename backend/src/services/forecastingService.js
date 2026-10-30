@@ -16,8 +16,8 @@ const generateForecastForLocation = async (locationId, targetPeriodDays = 7) => 
 
   // Fetch unit economics from user or fallback
   const user = await User.findOne();
-  const unitCost = user?.defaultUnitCost || 4.5;
-  const unitPrice = user?.defaultSellingPrice || 7.99;
+  const unitCost = user?.defaultUnitCost || 75.0; // INR
+  const unitPrice = user?.defaultSellingPrice || 105.0; // INR
   const unitMargin = Math.max(0, unitPrice - unitCost);
 
   // Fetch historical sales for this location (last 60 days)
@@ -145,7 +145,7 @@ const generateForecastForLocation = async (locationId, targetPeriodDays = 7) => 
     (
       lostMarginFromStockout * 0.95 + // Recovered margin by supplying exact deficit
       (expiringInventory > 0 ? imminentExpiryLoss * 0.5 : 0) + // Early markdown/salvage value
-      (recommendedSupply > 0 ? 45.0 : 20.0) // Operational logistics efficiency
+      (recommendedSupply > 0 ? 450.0 : 200.0) // Operational logistics & batch order efficiency (INR)
     ).toFixed(2)
   );
 

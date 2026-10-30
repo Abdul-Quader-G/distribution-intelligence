@@ -94,7 +94,7 @@ const createSupply = async (req, res, next) => {
     // Default unit cost from user if not specified
     if (unitCost === undefined || unitCost === null || unitCost === '') {
       const user = await User.findOne();
-      unitCost = user?.defaultUnitCost || 4.5;
+      unitCost = user?.defaultUnitCost || 75.0;
     }
 
     const newSupply = await SupplyRecord.create({
@@ -105,7 +105,7 @@ const createSupply = async (req, res, next) => {
       supplyDate: supplyDate ? new Date(supplyDate) : new Date(),
       expiryDate: new Date(expiryDate),
       unitCost: Number(unitCost),
-      supplierName: supplierName || 'Apex Organics Dairy Co.',
+      supplierName: supplierName || 'Apex Dairy Processing, Shamshabad',
       notes: notes || '',
       status: 'active'
     });

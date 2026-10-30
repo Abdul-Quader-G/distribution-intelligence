@@ -41,7 +41,7 @@ const supplyRecordSchema = new mongoose.Schema(
     },
     supplierName: {
       type: String,
-      default: 'Apex Organics Dairy Co.'
+      default: 'Apex Dairy Processing, Shamshabad'
     },
     notes: {
       type: String,

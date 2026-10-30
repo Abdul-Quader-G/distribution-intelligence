@@ -20,91 +20,91 @@ const seedDatabase = async () => {
 
   // 2. Create Business Owner / Admin
   const owner = await User.create({
-    name: 'Elena Vance',
+    name: 'Rajesh Varma',
     email: 'admin@distribintel.com',
     password: 'admin123',
     role: 'owner',
-    companyName: 'Apex Distribution Partners',
-    productName: 'Apex Organic Greek Yogurt (500g)',
-    productCategory: 'Perishable Dairy & Probiotics',
-    defaultUnitCost: 4.5,
-    defaultSellingPrice: 7.99,
+    companyName: 'Apex Dairy Distribution',
+    productName: 'Apex Fresh Paneer 200g',
+    productCategory: 'Fresh Dairy & Paneer',
+    defaultUnitCost: 75.0, // Wholesale procurement cost (INR)
+    defaultSellingPrice: 105.0, // Retail MRP (INR)
     defaultLeadTimeDays: 7
   });
 
   console.log(`[Seed] Created admin account: ${owner.email} / admin123`);
 
-  // 3. Create Locations
+  // 3. Create Hyderabad Distribution Locations
   const locationsData = [
     {
-      name: 'Downtown Flagship Store',
+      name: 'Gachibowli Flagship Outlet',
       code: 'LOC-01',
       type: 'Flagship Retail',
-      address: '450 Lexington Ave',
-      city: 'New York',
-      state: 'NY',
-      contactPerson: 'Marcus Brody',
-      contactPhone: '+1 (212) 555-0142',
+      address: 'Plot 22, Financial District, Gachibowli',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      contactPerson: 'Rahul Sharma',
+      contactPhone: '+91 98490 12345',
       capacityUnits: 1800,
-      minSafetyStock: 100
+      minSafetyStock: 120
     },
     {
-      name: 'Metro Distribution Hub East',
+      name: 'Madhapur Distribution Hub',
       code: 'LOC-02',
       type: 'Regional Hub',
-      address: '88 Long Island Expressway',
-      city: 'Queens',
-      state: 'NY',
-      contactPerson: 'Sarah Jenkins',
-      contactPhone: '+1 (718) 555-0199',
+      address: 'Plot 88, Hitec City Main Rd, Madhapur',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      contactPerson: 'Priya Varma',
+      contactPhone: '+91 98490 23456',
       capacityUnits: 3200,
       minSafetyStock: 250
     },
     {
-      name: 'Westfield Grand Kiosk',
+      name: 'Kondapur Fresh Kiosk',
       code: 'LOC-03',
       type: 'Supermarket Kiosk',
-      address: '1000 Flatbush Ave Mall',
-      city: 'Brooklyn',
-      state: 'NY',
-      contactPerson: 'David Chen',
-      contactPhone: '+1 (347) 555-0187',
+      address: 'Botanical Garden Rd, Kondapur',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      contactPerson: 'Venkat Rao',
+      contactPhone: '+91 98490 34567',
       capacityUnits: 950,
-      minSafetyStock: 60
+      minSafetyStock: 70
     },
     {
-      name: 'Northridge Organic Mart',
+      name: 'Kukatpally Supermarket Outlet',
       code: 'LOC-04',
       type: 'Convenience Store',
-      address: '220 Central Park Ave',
-      city: 'White Plains',
-      state: 'NY',
-      contactPerson: 'Amara Okafor',
-      contactPhone: '+1 (914) 555-0164',
-      capacityUnits: 1200,
-      minSafetyStock: 75
+      address: 'Road No 1, KPHB Colony Phase 3, Kukatpally',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      contactPerson: 'Ananya Reddy',
+      contactPhone: '+91 98490 45678',
+      capacityUnits: 1400,
+      minSafetyStock: 90
     },
     {
-      name: 'Harbor Point Market',
+      name: 'Secunderabad Wholesale Point',
       code: 'LOC-05',
       type: 'Wholesale Outlet',
-      address: '15 Harbor Point Blvd',
-      city: 'Stamford',
-      state: 'CT',
-      contactPerson: 'Liam Gallagher',
-      contactPhone: '+1 (203) 555-0131',
+      address: '15 Rashtrapati Road, Secunderabad',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      contactPerson: 'Mohammed Farooq',
+      contactPhone: '+91 98490 56789',
       capacityUnits: 2400,
       minSafetyStock: 180
     }
   ];
 
   const locations = await Location.insertMany(locationsData);
-  console.log(`[Seed] Seeded ${locations.length} distribution locations.`);
+  console.log(`[Seed] Seeded ${locations.length} Hyderabad distribution locations.`);
 
-  // 4. Generate 45 Days of Historical Daily Sales
+  // 4. Generate 45 Days of Historical Daily Sales (INR 105 per pack)
   const salesToInsert = [];
   const now = new Date();
-  const sellingPrice = 7.99;
+  const sellingPrice = 105.0; // INR
 
   // Base sales profile per location
   const locProfiles = {
@@ -134,7 +134,7 @@ const seedDatabase = async () => {
         quantitySold: dailyUnits,
         unitPrice: sellingPrice,
         revenue: Number((dailyUnits * sellingPrice).toFixed(2)),
-        notes: isWeekend ? 'Weekend retail surge' : 'Standard weekday delivery demand'
+        notes: isWeekend ? 'Weekend retail dairy surge' : 'Daily dairy counter demand'
       });
     }
   }
@@ -143,10 +143,10 @@ const seedDatabase = async () => {
   console.log(`[Seed] Seeded ${salesToInsert.length} historical daily sales records.`);
 
   // 5. Generate Supply Batches:
-  // - Past batches that were supplied 30-40 days ago (some units expired to reflect historical loss)
-  // - Batches supplied 15 days ago with short expiry (imminent 3-5 days expiry risk)
-  // - Fresh batches supplied recently (with 14-21 days of safe shelf life)
-  const unitCost = 4.5;
+  // - Past batches that were supplied 36 days ago (25 units expired to reflect historical loss)
+  // - Batches supplied 14 days ago with short expiry (imminent 4 days expiry risk)
+  // - Fresh batches supplied recently (with 14 days of safe shelf life for fresh paneer)
+  const unitCost = 75.0; // INR Wholesale Procurement Cost
   const batchesToInsert = [];
   let batchCounter = 100;
 
@@ -156,7 +156,7 @@ const seedDatabase = async () => {
       .reduce((sum, s) => sum + s.quantitySold, 0);
 
     // Batch 1: Supplied 36 days ago, expired 6 days ago.
-    // Leaves exactly 25 units unpurchased that expired past shelf life ($112.50 loss per location)
+    // Leaves exactly 25 units unpurchased that expired past shelf life (₹1,875 loss per location)
     batchCounter++;
     const batch1Qty = locSalesTotal + 25;
     batchesToInsert.push({
@@ -167,8 +167,8 @@ const seedDatabase = async () => {
       supplyDate: new Date(now.getTime() - 36 * 24 * 60 * 60 * 1000),
       expiryDate: new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000),
       unitCost,
-      supplierName: 'Apex Organics Dairy Co.',
-      notes: 'Initial cycle batch - past shelf life',
+      supplierName: 'Apex Dairy Farms, Shamshabad',
+      notes: 'Initial cycle batch - past shelf life (spoilage)',
       status: 'expired'
     });
 
@@ -184,13 +184,13 @@ const seedDatabase = async () => {
       supplyDate: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000),
       expiryDate: new Date(now.getTime() + 4 * 24 * 60 * 60 * 1000),
       unitCost,
-      supplierName: 'Apex Organics Dairy Co.',
+      supplierName: 'Apex Dairy Farms, Shamshabad',
       notes: 'Mid-month supply - near-expiry warning window',
       status: 'active'
     });
 
-    // Batch 3: Fresh certified batch supplied 3 days ago, safe for 18 days
-    // Provides ~260-350 units of fresh usable stock
+    // Batch 3: Fresh certified paneer batch supplied 3 days ago, safe for 14 days
+    // Provides fresh usable stock
     batchCounter++;
     const freshUnits = loc.code === 'LOC-03' ? 180 : (loc.code === 'LOC-01' ? 320 : 380);
     batchesToInsert.push({
@@ -199,9 +199,9 @@ const seedDatabase = async () => {
       quantity: freshUnits,
       remainingQuantity: freshUnits,
       supplyDate: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
-      expiryDate: new Date(now.getTime() + 18 * 24 * 60 * 60 * 1000),
+      expiryDate: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000),
       unitCost,
-      supplierName: 'Apex Organics Dairy Co.',
+      supplierName: 'Apex Dairy Farms, Shamshabad',
       notes: 'Latest certified cold-chain shipment',
       status: 'active'
     });

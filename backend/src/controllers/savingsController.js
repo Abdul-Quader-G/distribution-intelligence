@@ -12,8 +12,8 @@ const { generateAllLocationForecasts } = require('../services/forecastingService
 const getSavingsAnalytics = async (req, res, next) => {
   try {
     const user = await User.findOne();
-    const unitCost = user?.defaultUnitCost || 4.5;
-    const unitPrice = user?.defaultSellingPrice || 7.99;
+    const unitCost = user?.defaultUnitCost || 75.0;
+    const unitPrice = user?.defaultSellingPrice || 105.0;
     const unitMargin = Math.max(0, unitPrice - unitCost);
 
     // Global inventory & forecasts
@@ -54,7 +54,7 @@ const getSavingsAnalytics = async (req, res, next) => {
         locationId: loc?._id,
         name: loc?.name || 'Location',
         code: loc?.code || 'LOC',
-        city: loc?.city || 'Metropolis',
+        city: loc?.city || 'Hyderabad',
         usableInventory: f.usableInventory,
         expiringInventory: f.expiringInventory,
         recommendedSupply: f.recommendedSupply,
@@ -65,13 +65,13 @@ const getSavingsAnalytics = async (req, res, next) => {
       };
     });
 
-    // 6-Month simulated historical timeline vs projected path
+    // 6-Month simulated historical timeline vs projected path (Values in INR)
     const monthlyComparison = [
-      { month: 'May', baselineLoss: 1420, withAIProjection: 420, netSavings: 1000 },
-      { month: 'Jun', baselineLoss: 1680, withAIProjection: 490, netSavings: 1190 },
-      { month: 'Jul', baselineLoss: 2150, withAIProjection: 610, netSavings: 1540 },
-      { month: 'Aug', baselineLoss: 1890, withAIProjection: 530, netSavings: 1360 },
-      { month: 'Sep', baselineLoss: 1750, withAIProjection: 480, netSavings: 1270 },
+      { month: 'May', baselineLoss: 24500, withAIProjection: 7200, netSavings: 17300 },
+      { month: 'Jun', baselineLoss: 28400, withAIProjection: 8100, netSavings: 20300 },
+      { month: 'Jul', baselineLoss: 34200, withAIProjection: 9800, netSavings: 24400 },
+      { month: 'Aug', baselineLoss: 31000, withAIProjection: 8900, netSavings: 22100 },
+      { month: 'Sep', baselineLoss: 29500, withAIProjection: 8400, netSavings: 21100 },
       { month: 'Oct (Current)', baselineLoss: Number(totalProjectedLossWithoutAction.toFixed(2)), withAIProjection: Number((totalProjectedLossWithoutAction - totalProjectedSavingsCycle).toFixed(2)), netSavings: Number(totalProjectedSavingsCycle.toFixed(2)) }
     ];
 

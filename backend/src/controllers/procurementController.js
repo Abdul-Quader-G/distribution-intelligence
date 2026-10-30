@@ -87,16 +87,16 @@ const approveProcurementOrder = async (req, res, next) => {
     }
 
     const user = await User.findOne();
-    const unitCost = user?.defaultUnitCost || 4.5;
+    const unitCost = user?.defaultUnitCost || 75.0; // INR
 
     // Generate batch number
     const count = await SupplyRecord.countDocuments();
     const year = new Date().getFullYear();
     const batchNumber = `AI-ORD-${year}-${String(count + 1).padStart(4, '0')}`;
 
-    // Fresh batch gets 21 days expiry standard shelf-life
+    // Fresh certified paneer batch gets 14 days standard refrigerated shelf-life
     const now = new Date();
-    const expiryDate = new Date(now.getTime() + 21 * 24 * 60 * 60 * 1000);
+    const expiryDate = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
 
     const supplyOrder = await SupplyRecord.create({
       batchNumber,
@@ -106,7 +106,7 @@ const approveProcurementOrder = async (req, res, next) => {
       supplyDate: now,
       expiryDate,
       unitCost,
-      supplierName: 'Apex Organics Dairy Co. (Auto-Replenish)',
+      supplierName: 'Apex Dairy Processing, Shamshabad (Auto-Replenish)',
       notes: `Generated via AI Procurement recommendation for ${forecast.targetPeriodDays}-day cycle.`,
       status: 'active'
     });

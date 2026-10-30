@@ -29,23 +29,23 @@ const userSchema = new mongoose.Schema(
     },
     companyName: {
       type: String,
-      default: 'Apex Distribution Group'
+      default: 'Apex Dairy Distribution'
     },
     productName: {
       type: String,
-      default: 'Apex Organic Greek Yogurt (500g)'
+      default: 'Apex Fresh Paneer 200g'
     },
     productCategory: {
       type: String,
-      default: 'Perishable Dairy & Probiotics'
+      default: 'Fresh Dairy & Paneer'
     },
     defaultUnitCost: {
       type: Number,
-      default: 4.5
+      default: 75.0 // INR (Wholesale production & procurement cost)
     },
     defaultSellingPrice: {
       type: Number,
-      default: 7.99
+      default: 105.0 // INR (Retail MRP)
     },
     defaultLeadTimeDays: {
       type: Number,

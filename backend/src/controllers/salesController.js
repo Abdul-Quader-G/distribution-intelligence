@@ -76,7 +76,7 @@ const createSale = async (req, res, next) => {
     // Default unit price from business owner profile if omitted
     if (unitPrice === undefined || unitPrice === null || unitPrice === '') {
       const user = await User.findOne();
-      unitPrice = user?.defaultSellingPrice || 7.99;
+      unitPrice = user?.defaultSellingPrice || 105.0;
     }
 
     const saleDate = date ? new Date(date) : new Date();
@@ -116,7 +116,7 @@ const createBulkSales = async (req, res, next) => {
     }
 
     const user = await User.findOne();
-    const defaultPrice = user?.defaultSellingPrice || 7.99;
+    const defaultPrice = user?.defaultSellingPrice || 105.0;
     const saleDate = date ? new Date(date) : new Date();
 
     const createdRecords = [];
